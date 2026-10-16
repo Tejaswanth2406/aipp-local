@@ -57,16 +57,3 @@ tests/           Unit, integration, adversarial, offline, privacy, performance
 scripts/         validate-release.js, verify-artifacts.js
 ```
 
-## Implementation milestones
-
-| Milestone | Status |
-|-----------|--------|
-| 01 — Specification and threat model | ✅ Complete ([SPEC.md](SPEC.md), [THREAT_MODEL.md](THREAT_MODEL.md), [SECURITY.md](SECURITY.md)) |
-| 02 — Minimal Firefox enforcement & UI | ✅ Complete (Popup, Dashboard, Settings, DNR compilation) |
-| 03 — Integrity and state | ✅ Complete (Hash-chain ledger, checkpointing, state store) |
-| 04 — Temporal engine and ML advisory | ✅ Complete (Evidence decay, monotonic clock, classifier) |
-| 05 — Independent verification & tests | ✅ Complete (10-invariant test suite, release validation) |
-
-## License
-
-To be determined before public release. No license grants are made in this draft.
