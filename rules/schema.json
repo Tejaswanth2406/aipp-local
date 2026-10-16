@@ -1,0 +1,42 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AIPP Bundled Rules Schema",
+  "type": "object",
+  "required": ["schemaVersion", "artifactVersion", "hardRules", "bundledRules"],
+  "properties": {
+    "schemaVersion":   { "type": "integer", "minimum": 1 },
+    "artifactVersion": { "type": "string" },
+    "description":     { "type": "string" },
+    "hardRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "action", "matchPatterns"],
+        "properties": {
+          "id":            { "type": "string" },
+          "comment":       { "type": "string" },
+          "category":      { "type": "string" },
+          "action":        { "type": "string", "enum": ["block"] },
+          "matchPatterns": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "bundledRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "priority", "action", "matchPatterns"],
+        "properties": {
+          "id":            { "type": "string" },
+          "comment":       { "type": "string" },
+          "priority":      { "type": "integer", "minimum": 1 },
+          "action":        { "type": "string", "enum": ["block", "allow"] },
+          "matchPatterns": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

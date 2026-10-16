@@ -1,0 +1,39 @@
+{
+  "name": "aipp-local",
+  "version": "0.2.0",
+  "description": "Adaptive, Integrity-Preserving Privacy Protocol — local-only Firefox privacy framework.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test":              "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:unit":         "jest tests/unit",
+    "test:integration":  "jest tests/integration",
+    "test:adversarial":  "jest tests/adversarial",
+    "test:offline":      "jest tests/offline",
+    "test:privacy":      "jest tests/privacy",
+    "test:performance":  "jest tests/performance",
+    "lint":              "eslint src scripts --ext .js",
+    "validate-release":  "node scripts/validate-release.js",
+    "verify-artifacts":  "node scripts/verify-artifacts.js",
+    "build":             "node scripts/build.js",
+    "package":           "powershell -ExecutionPolicy Bypass -File scripts/package-addon.ps1"
+  },
+  "devDependencies": {
+    "eslint":                   "8.57.0",
+    "jest":                     "29.7.0",
+    "jest-environment-node":    "29.7.0",
+    "@jest/globals":            "29.7.0"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "jest": {
+    "testEnvironment":    "node",
+    "extensionsToTreatAsEsm": [".js"],
+    "transform": {},
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
+  }
+}

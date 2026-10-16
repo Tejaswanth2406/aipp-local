@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIPP Local</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="logo">
+        <span class="logo-mark">&#9650;</span>
+        <span class="logo-text">AIPP Local</span>
+      </div>
+      <div id="status-badge" class="badge badge--ok" aria-label="Extension status">ON</div>
+    </header>
+
+    <section class="summary" aria-label="Session statistics">
+      <div class="stat">
+        <span class="stat-value" id="blocked-count">—</span>
+        <span class="stat-label">Blocked</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value" id="allowed-count">—</span>
+        <span class="stat-label">Allowed</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value" id="exception-count">—</span>
+        <span class="stat-label">Exceptions</span>
+      </div>
+    </section>
+
+    <section class="site-panel" aria-label="Current site">
+      <div class="site-origin" id="current-origin">Loading…</div>
+      <div class="site-controls">
+        <button id="btn-exception" class="btn btn--secondary" disabled>
+          Allow this site for 1 hour
+        </button>
+      </div>
+    </section>
+
+    <section class="policy-status" aria-label="Policy status">
+      <div class="policy-row">
+        <span class="policy-label">Hard rules</span>
+        <span class="policy-value" id="hard-rule-count">—</span>
+      </div>
+      <div class="policy-row">
+        <span class="policy-label">Bundled rules</span>
+        <span class="policy-value" id="bundled-rule-count">—</span>
+      </div>
+      <div class="policy-row">
+        <span class="policy-label">Policy version</span>
+        <span class="policy-value" id="policy-version">—</span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <button id="btn-dashboard" class="link-btn">Dashboard</button>
+      <span class="footer-sep">·</span>
+      <button id="btn-settings" class="link-btn">Settings</button>
+    </footer>
+
+    <div id="integrity-warning" class="integrity-warning hidden" role="alert">
+      &#9888; Integrity check failed — see dashboard
+    </div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

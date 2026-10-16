@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIPP Local — Policy & Security Settings</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+    <header class="settings-header">
+      <div class="header-left">
+        <a href="../dashboard/dashboard.html" class="back-link">← Back to Dashboard</a>
+        <h1>Policy & Security Settings</h1>
+        <p class="header-sub">Configure local-only enforcement thresholds, ML advisory weights, and retention policies.</p>
+      </div>
+      <div class="header-badge">
+        <span class="badge-status">SEC-01 COMPLIANT</span>
+      </div>
+    </header>
+
+    <main class="settings-body">
+      <!-- Section 1: ML Advisory Policy -->
+      <section class="settings-card">
+        <div class="card-title-row">
+          <h2>Machine Learning Advisory (Step 5)</h2>
+          <span class="badge-tag">SEC-04 INVARIANT</span>
+        </div>
+        <p class="card-desc">
+          Local model provides advisory risk scores only. Hard rules (steps 1–4) run unconditionally before ML evaluation.
+        </p>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label" for="toggle-ml-enabled">Enable Local ML Classifier</label>
+            <span class="setting-help">Run local ONNX/Wasm model on network request features. Zero cloud calls.</span>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="toggle-ml-enabled">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label" for="slider-ml-block">High-Risk Block Threshold</label>
+            <span class="setting-help">Requests scoring above this threshold are blocked by ML advisory. Default: 0.75</span>
+          </div>
+          <div class="setting-control slider-control">
+            <input type="range" id="slider-ml-block" min="0.5" max="0.95" step="0.05" value="0.75">
+            <span class="slider-val" id="val-ml-block">0.75</span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label" for="slider-ml-allow">Low-Risk Allow Threshold</label>
+            <span class="setting-help">Requests scoring below this threshold are allowed by ML advisory. Default: 0.25</span>
+          </div>
+          <div class="setting-control slider-control">
+            <input type="range" id="slider-ml-allow" min="0.05" max="0.45" step="0.05" value="0.25">
+            <span class="slider-val" id="val-ml-allow">0.25</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Temporal & Exception Policy -->
+      <section class="settings-card">
+        <div class="card-title-row">
+          <h2>Temporal & Exception Limits</h2>
+          <span class="badge-tag">SEC-09 INVARIANT</span>
+        </div>
+        <p class="card-desc">
+          Exceptions are strictly time-bounded, monotonic, and scoped to exact origins.
+        </p>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label" for="select-max-duration">Max Exception Duration</label>
+            <span class="setting-help">Upper bound on temporary exception lifespan. Cannot exceed 24 hours.</span>
+          </div>
+          <div class="setting-control">
+            <select id="select-max-duration" class="form-select">
+              <option value="3600000">1 Hour</option>
+              <option value="14400000">4 Hours</option>
+              <option value="43200000">12 Hours</option>
+              <option value="86400000" selected>24 Hours (Max SEC-09)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label" for="select-decay-halflife">Evidence Decay Half-Life</label>
+            <span class="setting-help">Temporal decay half-life for observed tracking evidence weights.</span>
+          </div>
+          <div class="setting-control">
+            <select id="select-decay-halflife" class="form-select">
+              <option value="86400000">24 Hours</option>
+              <option value="259200000">3 Days</option>
+              <option value="604800000" selected>7 Days (Standard)</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Maintenance & Ledger Actions -->
+      <section class="settings-card">
+        <div class="card-title-row">
+          <h2>Ledger Maintenance & Diagnostics</h2>
+          <span class="badge-tag">INTEGRITY</span>
+        </div>
+        <p class="card-desc">
+          Audit ledger records all policy updates and exception grants with SHA-256 hash chaining.
+        </p>
+
+        <div class="action-grid">
+          <div class="action-box">
+            <div class="action-title">Purge Expired Exceptions</div>
+            <div class="action-desc">Clean up tombstoned and time-expired exception records from local storage.</div>
+            <button id="btn-purge-expired" class="btn-secondary">Run Purge Sweep</button>
+          </div>
+
+          <div class="action-box">
+            <div class="action-title">Save Checkpoint</div>
+            <div class="action-desc">Commit a cryptographic checkpoint of the current ledger head into storage.</div>
+            <button id="btn-create-checkpoint" class="btn-primary">Generate Checkpoint</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Save Bar -->
+      <div class="save-bar">
+        <span class="save-status" id="save-status-text">All settings saved locally.</span>
+        <button id="btn-save-settings" class="btn-primary">Save Policy Changes</button>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script type="module" src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+﻿{
+  "schemaVersion": 1,
+  "models": [
+    {
+      "modelId":      "tracker-v1",
+      "version":      "1.0.0",
+      "algorithm":    "gradient-boosted-tree",
+      "sha256":       "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "inputSchema":  "BoundedFeatureVector/v1",
+      "outputSchema": "RiskEstimate/v1",
+      "trainedOn":    "public-tracker-dataset-2026-q2",
+      "validUntil":   "2027-01-01"
+    }
+  ]
+}

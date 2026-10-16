@@ -1,0 +1,65 @@
+{
+  "manifest_version": 3,
+  "name": "AIPP Local",
+  "version": "0.2.0",
+  "description": "Adaptive, Integrity-Preserving Privacy Protocol — local-only Firefox privacy framework.",
+  "author": "AIPP Project",
+  "homepage_url": "https://github.com/aipp-local/aipp-local",
+
+  "background": {
+    "scripts": ["src/background/bootstrap.js"],
+    "type": "module"
+  },
+
+  "action": {
+    "default_popup": "src/ui/popup/popup.html",
+    "default_icon": {
+      "16":  "icons/icon-16.png",
+      "48":  "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+
+  "options_ui": {
+    "page": "src/ui/settings/settings.html",
+    "open_in_tab": true
+  },
+
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage",
+    "alarms"
+  ],
+
+  "host_permissions": [],
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "bundled-rules",
+        "enabled": true,
+        "path": "rules/bundled-rules.json"
+      }
+    ]
+  },
+
+  "web_accessible_resources": [],
+
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; object-src 'none'; connect-src 'none'; img-src 'self' data:; style-src 'self';"
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "aipp-local@aipp-project",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  }
+}

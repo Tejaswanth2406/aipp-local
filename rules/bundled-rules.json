@@ -1,0 +1,44 @@
+﻿{
+  "schemaVersion": 1,
+  "artifactVersion": "0.1.0",
+  "description": "AIPP Local bundled tracker and privacy rules — v0.1 seed set.",
+  "hardRules": [
+    {
+      "id": "hard-001",
+      "comment": "Block known cryptomining scripts.",
+      "category": "CRYPTOMINING",
+      "action": "block",
+      "matchPatterns": ["*://*.coinhive.com/*", "*://*.cryptonight.net/*"]
+    },
+    {
+      "id": "hard-002",
+      "comment": "Block fingerprinting-as-a-service endpoints.",
+      "category": "FINGERPRINTING",
+      "action": "block",
+      "matchPatterns": ["*://*.fingerprintjs.com/*", "*://*.fp.io/*"]
+    }
+  ],
+  "bundledRules": [
+    {
+      "id": "rule-001",
+      "comment": "Block Google Analytics.",
+      "priority": 100,
+      "action": "block",
+      "matchPatterns": ["*://www.google-analytics.com/*", "*://analytics.google.com/*"]
+    },
+    {
+      "id": "rule-002",
+      "comment": "Block Facebook tracking pixel.",
+      "priority": 100,
+      "action": "block",
+      "matchPatterns": ["*://www.facebook.com/tr/*", "*://connect.facebook.net/*/fbevents.js"]
+    },
+    {
+      "id": "rule-003",
+      "comment": "Block Doubleclick.",
+      "priority": 100,
+      "action": "block",
+      "matchPatterns": ["*://*.doubleclick.net/*"]
+    }
+  ]
+}

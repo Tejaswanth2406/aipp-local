@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIPP Local — Privacy & Integrity Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">AIPP Local</span>
+          <span class="brand-subtitle">Protocol Dashboard v0.1.0</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="overview" id="nav-overview">
+          <span class="nav-icon">📊</span> Overview
+        </button>
+        <button class="nav-item" data-tab="ledger" id="nav-ledger">
+          <span class="nav-icon">⛓️</span> Audit Ledger
+        </button>
+        <button class="nav-item" data-tab="exceptions" id="nav-exceptions">
+          <span class="nav-icon">⏳</span> Scoped Exceptions
+        </button>
+        <button class="nav-item" data-tab="artifacts" id="nav-artifacts">
+          <span class="nav-icon">🛡️</span> Artifacts & Models
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="system-status-pill">
+          <span class="status-dot"></span>
+          <span class="status-label" id="sidebar-status-text">OFFLINE / ISOLATED</span>
+        </div>
+        <div class="nav-links">
+          <a href="../settings/settings.html" class="settings-link" id="link-settings">⚙️ Settings</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-bar">
+        <div class="header-titles">
+          <h1 id="page-title">Integrity & Enforcement Overview</h1>
+          <p class="header-desc">Cryptographically verified local privacy enforcement without remote dependencies.</p>
+        </div>
+        <div class="header-actions">
+          <button id="btn-refresh" class="btn-secondary" title="Refresh state">🔄 Refresh</button>
+          <button id="btn-verify-ledger" class="btn-primary" title="Recompute cryptographic hash-chain">Verify Ledger</button>
+        </div>
+      </header>
+
+      <!-- Overview Tab -->
+      <section id="tab-overview" class="tab-pane active">
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Ledger Integrity</span>
+            <div class="metric-value-row">
+              <span class="metric-value status-badge valid" id="overview-integrity-badge">VALID</span>
+            </div>
+            <span class="metric-sub" id="overview-chain-length">0 chained events</span>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-label">Hard Rules Enforced</span>
+            <div class="metric-value-row">
+              <span class="metric-value" id="overview-hard-rules">0</span>
+            </div>
+            <span class="metric-sub">Zero-override security baseline</span>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-label">Bundled DNR Rules</span>
+            <div class="metric-value-row">
+              <span class="metric-value" id="overview-bundled-rules">0</span>
+            </div>
+            <span class="metric-sub">Kernel-level declarative rules</span>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-label">Active Exceptions</span>
+            <div class="metric-value-row">
+              <span class="metric-value" id="overview-active-exceptions">0</span>
+            </div>
+            <span class="metric-sub">Time-bounded, origin-scoped</span>
+          </div>
+        </div>
+
+        <div class="card-grid-two">
+          <div class="glass-card">
+            <div class="card-header">
+              <h2>Protocol Invariant Status</h2>
+              <span class="pill-info">SEC-01 — SEC-10</span>
+            </div>
+            <div class="card-body">
+              <ul class="invariants-list">
+                <li class="invariant-item">
+                  <span class="inv-badge pass">SEC-01</span>
+                  <div class="inv-info">
+                    <strong>Zero Remote Execution</strong>
+                    <span>No telemetry, no remote scripts, connect-src 'none'.</span>
+                  </div>
+                </li>
+                <li class="invariant-item">
+                  <span class="inv-badge pass">SEC-04</span>
+                  <div class="inv-info">
+                    <strong>Hard Rules Strictly Precede ML</strong>
+                    <span>ML risk estimates cannot bypass or downgrade hard rules.</span>
+                  </div>
+                </li>
+                <li class="invariant-item">
+                  <span class="inv-badge pass">SEC-07</span>
+                  <div class="inv-info">
+                    <strong>Cryptographic Hash-Chain Ledger</strong>
+                    <span>SHA-256 linked log of all state transitions and policy modifications.</span>
+                  </div>
+                </li>
+                <li class="invariant-item">
+                  <span class="inv-badge pass">SEC-09</span>
+                  <div class="inv-info">
+                    <strong>Scoped Exception Boundaries</strong>
+                    <span>Exceptions strictly decay, expire monotonically, and cannot broaden.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-header">
+              <h2>Ledger Head Summary</h2>
+              <button id="btn-export-log-quick" class="btn-secondary btn-sm">Export JSON</button>
+            </div>
+            <div class="card-body">
+              <div class="hash-display-box">
+                <span class="hash-label">Current Head SHA-256:</span>
+                <code class="hash-text" id="overview-head-hash">GENESIS</code>
+              </div>
+              <div class="hash-display-box">
+                <span class="hash-label">Last Checkpoint:</span>
+                <code class="hash-text" id="overview-checkpoint-hash">None recorded</code>
+              </div>
+              <div class="recent-events-container">
+                <div class="section-subheading">Recent Audit Records</div>
+                <div id="overview-recent-events" class="event-mini-list">
+                  <div class="empty-state">No events logged yet</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ledger Tab -->
+      <section id="tab-ledger" class="tab-pane">
+        <div class="glass-card">
+          <div class="card-header flex-between">
+            <div>
+              <h2>Audit Ledger Event Stream</h2>
+              <p class="card-sub">Monotonically sequential, tamper-evident record (SEC-07). Raw URLs are never logged.</p>
+            </div>
+            <div class="actions-row">
+              <button id="btn-export-ledger" class="btn-secondary">📥 Export Ledger</button>
+              <button id="btn-verify-chain" class="btn-primary">Verify Entire Chain</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table class="data-table" id="ledger-table">
+                <thead>
+                  <tr>
+                    <th style="width: 70px;">Seq</th>
+                    <th style="width: 170px;">Timestamp</th>
+                    <th style="width: 190px;">Event Type</th>
+                    <th>Payload Digest</th>
+                    <th>Prev Hash</th>
+                    <th>Block Hash</th>
+                  </tr>
+                </thead>
+                <tbody id="ledger-table-body">
+                  <tr>
+                    <td colspan="6" class="text-center py-4">Loading ledger...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Exceptions Tab -->
+      <section id="tab-exceptions" class="tab-pane">
+        <div class="glass-card">
+          <div class="card-header flex-between">
+            <div>
+              <h2>Active Scoped Exceptions</h2>
+              <p class="card-sub">Exceptions grant temporary, narrow allowance. Hard-block rules remain enforced.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table class="data-table" id="exceptions-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Origin Scope</th>
+                    <th>Resource Types</th>
+                    <th>Expires In</th>
+                    <th>Granted At</th>
+                    <th style="width: 100px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="exceptions-table-body">
+                  <tr>
+                    <td colspan="6" class="text-center py-4">No active exceptions</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Artifacts Tab -->
+      <section id="tab-artifacts" class="tab-pane">
+        <div class="card-grid-two">
+          <div class="glass-card">
+            <div class="card-header">
+              <h2>Bundled Rules Verification</h2>
+              <span class="status-badge valid" id="rules-artifact-status">VERIFIED</span>
+            </div>
+            <div class="card-body">
+              <div class="artifact-spec">
+                <div class="spec-row">
+                  <span class="spec-label">File:</span>
+                  <span class="spec-val">rules/bundled-rules.json</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Schema Version:</span>
+                  <span class="spec-val" id="rules-schema-ver">1</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Hard Rules Count:</span>
+                  <span class="spec-val" id="rules-hard-count">0</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Bundled Rules Count:</span>
+                  <span class="spec-val" id="rules-bundled-count">0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-header">
+              <h2>Model Manifest Integrity</h2>
+              <span class="status-badge valid" id="model-artifact-status">VERIFIED</span>
+            </div>
+            <div class="card-body">
+              <div class="artifact-spec">
+                <div class="spec-row">
+                  <span class="spec-label">Manifest:</span>
+                  <span class="spec-val">models/model-manifest.json</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Registered Models:</span>
+                  <span class="spec-val" id="models-registered-count">0</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Advisory Execution:</span>
+                  <span class="spec-val">Local Wasm/CPU Only</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">Authority:</span>
+                  <span class="spec-val">Advisory Only (SEC-04)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
