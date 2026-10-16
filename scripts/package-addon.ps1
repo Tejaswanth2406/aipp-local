@@ -5,6 +5,7 @@ Add-Type -AssemblyName "System.IO.Compression"
 Add-Type -AssemblyName "System.IO.Compression.FileSystem"
 
 $root = Resolve-Path "."
+$dist = Join-Path $root "dist"
 $manifest = Get-Content (Join-Path $root "manifest.json") -Raw | ConvertFrom-Json
 $version = $manifest.version
 $xpiPath = Join-Path $dist "aipp-local-$version.xpi"
